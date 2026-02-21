@@ -1,0 +1,70 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 40,
+    "margin-top": 8,
+    "margin-left": 14,
+    "margin-right": 14,
+    "spacing": 0,
+
+    "modules-left": ["custom/gentoo", "hyprland/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": ["custom/cava", "bluetooth", "pulseaudio"],
+
+    "custom/gentoo": {
+        "format": " ",
+        "on-click": "kitty",
+        "tooltip": false
+    },
+
+    "hyprland/workspaces": {
+        "format": "{id}",
+        "on-click": "activate",
+        "sort-by-number": true,
+        "all-outputs": true,
+        "active-only": false
+    },
+
+    "clock": {
+        "format": "{:%H:%M}",
+        "format-alt": "{:%d.%m.%Y  %H:%M}",
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "calendar": {
+            "mode": "month",
+            "format": {
+                "months": "<span color='#b388ff'><b>{}</b></span>",
+                "today": "<span color='#ea80fc'><b><u>{}</u></b></span>"
+            }
+        }
+    },
+
+    "custom/cava": {
+        "exec": "~/.config/hypr/scripts/cava-waybar.sh",
+        "format": "{}",
+        "tooltip": false,
+        "restart-interval": 5
+    },
+
+    "bluetooth": {
+        "format": " {status}",
+        "format-connected": " {num_connections}",
+        "format-disabled": "",
+        "tooltip-format": "{controller_alias}\n{num_connections} подключено",
+        "tooltip-format-connected": "{controller_alias}\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}",
+        "on-click": "bluedevil-wizard",
+        "on-click-right": "bluetoothctl power off"
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "MUTE",
+        "format-icons": {
+            "default": ["LOW", "MID", "HIGH"]
+        },
+        "on-click": "pavucontrol",
+        "on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
+    }
+}
