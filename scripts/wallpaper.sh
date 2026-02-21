@@ -22,7 +22,7 @@ splash = false
 ipc = on
 EOF
 
-    notify-send -i "$wall" "Обои обновлены" "$(basename "$wall")" 2>/dev/null
+    notify-send -i "$wall" "Wallpaper updated" "$(basename "$wall")" 2>/dev/null
 }
 
 pick_wofi() {
@@ -30,7 +30,7 @@ pick_wofi() {
         \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \
            -o -iname '*.webp' -o -iname '*.bmp' \) 2>/dev/null \
         | sort \
-        | wofi --dmenu --prompt "Выбери обои" \
+        | wofi --dmenu --prompt "Pick wallpaper" \
                --width 600 --height 400 --cache-file /dev/null
 }
 
@@ -45,24 +45,24 @@ pick_random() {
 case "${1:-}" in
     --random|-r)
         wall="$(pick_random "$2")"
-        [ -z "$wall" ] && { echo "Изображения не найдены"; exit 1; }
+        [ -z "$wall" ] && { echo "No images found"; exit 1; }
         set_wallpaper "$wall"
         ;;
     --set|-s)
-        [ -z "$2" ] && { echo "Использование: $0 --set /путь/к/обоям.jpg"; exit 1; }
-        [ ! -f "$2" ] && { echo "Файл не найден: $2"; exit 1; }
+        [ -z "$2" ] && { echo "Usage: $0 --set /path/to/wallpaper.jpg"; exit 1; }
+        [ ! -f "$2" ] && { echo "File not found: $2"; exit 1; }
         set_wallpaper "$2"
         ;;
     --help|-h)
         cat <<HELP
-wallpaper.sh — смена обоев для Hyprland + hyprpaper
+wallpaper.sh — wallpaper changer for Hyprland + hyprpaper
 
-Использование:
-  wallpaper.sh              Открыть меню выбора (wofi)
-  wallpaper.sh --random     Случайные обои из ~/Pictures
-  wallpaper.sh -r /путь     Случайные обои из указанной папки
-  wallpaper.sh --set ФАЙЛ   Установить конкретный файл
-  wallpaper.sh --help       Эта справка
+Usage:
+  wallpaper.sh              Open picker menu (wofi)
+  wallpaper.sh --random     Random wallpaper from ~/Pictures
+  wallpaper.sh -r /path     Random wallpaper from given directory
+  wallpaper.sh --set FILE   Set specific file
+  wallpaper.sh --help       This help
 HELP
         ;;
     *)

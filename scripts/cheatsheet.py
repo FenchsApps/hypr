@@ -76,7 +76,7 @@ KEY_NAMES = {
     "Return": "Enter", "space": "Space", "Tab": "Tab",
     "left": "←", "right": "→", "up": "↑", "down": "↓",
     "mouse_down": "Scroll ↓", "mouse_up": "Scroll ↑",
-    "mouse:272": "ЛКМ", "mouse:273": "ПКМ",
+    "mouse:272": "LMB", "mouse:273": "RMB",
     "Print": "PrtSc",
     "XF86AudioRaiseVolume": "Vol +", "XF86AudioLowerVolume": "Vol −",
     "XF86AudioMute": "Mute", "XF86AudioMicMute": "Mic Mute",
@@ -124,7 +124,7 @@ def parse_config(path):
             sm = section_re.match(line)
             if sm:
                 name = sm.group(1).strip()
-                if name.startswith("ГОРЯЧИЕ КЛАВИШИ"):
+                if name.startswith("KEYBINDS"):
                     if current_section and current_binds:
                         sections.append((current_section, current_binds))
                     current_section = name.replace("ГОРЯЧИЕ КЛАВИШИ — ", "").replace("ГОРЯЧИЕ КЛАВИШИ —", "").strip()
@@ -148,21 +148,21 @@ def parse_config(path):
                     desc = comment_desc
                 else:
                     desc_map = {
-                        "killactive": "Закрыть окно",
-                        "togglefloating": "Плавающее окно",
-                        "pseudo": "Псевдо-тайлинг",
-                        "togglesplit": "Переключить сплит",
-                        "fullscreen": "Полный экран",
-                        "movewindow": f"Переместить окно ({args})",
-                        "movefocus": f"Фокус ({args})",
-                        "workspace": f"Рабочий стол {args}",
-                        "movetoworkspace": f"Окно → стол {args}",
-                        "resizeactive": f"Ресайз ({args})",
-                        "cyclenext": "Следующее окно",
-                        "exit": "Выход из Hyprland",
+                        "killactive": "Close window",
+                        "togglefloating": "Toggle floating",
+                        "pseudo": "Pseudo-tiling",
+                        "togglesplit": "Toggle split",
+                        "fullscreen": "Fullscreen",
+                        "movewindow": f"Move window ({args})",
+                        "movefocus": f"Focus ({args})",
+                        "workspace": f"Workspace {args}",
+                        "movetoworkspace": f"Window → workspace {args}",
+                        "resizeactive": f"Resize ({args})",
+                        "cyclenext": "Next window",
+                        "exit": "Exit Hyprland",
                         "togglespecialworkspace": "Scratchpad",
-                        "movewindow": f"Переместить ({args})",
-                        "centerwindow": "Центрировать окно",
+                        "movewindow": f"Move ({args})",
+                        "centerwindow": "Center window",
                     }
                     desc = desc_map.get(dispatcher, f"{dispatcher} {args}".strip())
 
@@ -207,7 +207,7 @@ class CheatSheet(Gtk.Application):
         title.add_css_class("title-label")
         root_box.append(title)
 
-        sub = Gtk.Label(label="~ Neon Violet Cheatsheet ~")
+        sub = Gtk.Label(label="~ I am Purple Cheatsheet ~")
         sub.add_css_class("subtitle-label")
         root_box.append(sub)
 
@@ -216,7 +216,7 @@ class CheatSheet(Gtk.Application):
         self.search.connect("search-changed", self._on_search)
         root_box.append(self.search)
 
-        hint = Gtk.Label(label="ESC — закрыть")
+        hint = Gtk.Label(label="ESC — close")
         hint.add_css_class("hint-label")
         root_box.append(hint)
 

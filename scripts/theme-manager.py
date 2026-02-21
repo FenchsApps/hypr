@@ -691,7 +691,7 @@ class ThemeManager(Gtk.Application):
         title.add_css_class("app-title")
         root.append(title)
 
-        sub = Gtk.Label(label="Выбери тему, настрой и применяй")
+        sub = Gtk.Label(label="Pick a theme, configure and apply")
         sub.add_css_class("app-subtitle")
         root.append(sub)
 
@@ -708,7 +708,7 @@ class ThemeManager(Gtk.Application):
         self._update_card_styles()
 
         # ── Kitty background ──
-        sec2 = Gtk.Label(label="  KITTY ФОН", xalign=0)
+        sec2 = Gtk.Label(label="  KITTY BG", xalign=0)
         sec2.add_css_class("section-title")
         root.append(sec2)
 
@@ -716,7 +716,7 @@ class ThemeManager(Gtk.Application):
         bg_box.set_margin_start(16)
         bg_box.set_margin_top(4)
         self.radio_solid = Gtk.CheckButton(label="Статичный цвет")
-        self.radio_gradient = Gtk.CheckButton(label="Градиент")
+        self.radio_gradient = Gtk.CheckButton(label="Gradient")
         self.radio_gradient.set_group(self.radio_solid)
         if self.kitty_bg_mode == "gradient":
             self.radio_gradient.set_active(True)
@@ -730,7 +730,7 @@ class ThemeManager(Gtk.Application):
         self.grad_dir_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=16)
         self.grad_dir_box.set_margin_start(16)
         self.grad_dir_box.set_margin_top(4)
-        self.radio_vert = Gtk.CheckButton(label="Вертикальный")
+        self.radio_vert = Gtk.CheckButton(label="Vertical")
         self.radio_horiz = Gtk.CheckButton(label="Горизонтальный")
         self.radio_horiz.set_group(self.radio_vert)
         if self.kitty_gradient_dir == "horizontal":
@@ -744,7 +744,7 @@ class ThemeManager(Gtk.Application):
         root.append(self.grad_dir_box)
 
         # ── Kitty font color ──
-        sec_fg = Gtk.Label(label="  ЦВЕТ ШРИФТА KITTY", xalign=0)
+        sec_fg = Gtk.Label(label="  KITTY FONT COLOR", xalign=0)
         sec_fg.add_css_class("section-title")
         root.append(sec_fg)
 
@@ -780,7 +780,7 @@ class ThemeManager(Gtk.Application):
         root.append(fg_box)
 
         # ── Border animation ──
-        sec3 = Gtk.Label(label="  АНИМАЦИЯ БОРДЕРА", xalign=0)
+        sec3 = Gtk.Label(label="  BORDER ANIMATION", xalign=0)
         sec3.add_css_class("section-title")
         root.append(sec3)
 
@@ -789,7 +789,7 @@ class ThemeManager(Gtk.Application):
         border_box.set_margin_top(4)
         self.radio_loop = Gtk.CheckButton(label="Loop")
         self.radio_once = Gtk.CheckButton(label="Once")
-        self.radio_static = Gtk.CheckButton(label="Статичный")
+        self.radio_static = Gtk.CheckButton(label="Static")
         self.radio_once.set_group(self.radio_loop)
         self.radio_static.set_group(self.radio_loop)
         if self.border_mode == "once":
@@ -812,7 +812,7 @@ class ThemeManager(Gtk.Application):
         apply_btn.connect("clicked", self._on_apply)
         root.append(apply_btn)
 
-        hint = Gtk.Label(label="ESC — закрыть  |  Применяется ко всем конфигам")
+        hint = Gtk.Label(label="ESC — close  |  Applies to all configs")
         hint.add_css_class("hint")
         root.append(hint)
 

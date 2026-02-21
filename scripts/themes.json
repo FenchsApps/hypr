@@ -27,8 +27,8 @@
             "color7":  "#c8e6c9", "color15": "#ffffff"
         }
     },
-    "crimson_pulse": {
-        "name": "Crimson Pulse",
+    "truth_is_red": {
+        "name": "Truth is Red",
         "accent":  "#ff1744",
         "accent2": "#ff5252",
         "active":  "#ff8a80",
@@ -55,8 +55,8 @@
             "color7":  "#ffcdd2", "color15": "#ffffff"
         }
     },
-    "neon_violet": {
-        "name": "Neon Violet",
+    "i_am_purple": {
+        "name": "I am Purple",
         "accent":  "#b388ff",
         "accent2": "#7c4dff",
         "active":  "#ea80fc",
