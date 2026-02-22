@@ -82,6 +82,19 @@ else
     echo "  WARNING: no SVG converter found (install librsvg or imagemagick)"
 fi
 
+# ── Patch paths in waybar CSS ──
+
+echo ""
+echo "Patching waybar paths..."
+
+STYLE_FILE="$HYPR_DIR/waybar/style.css"
+if [ -f "$STYLE_FILE" ]; then
+    # Reset any previously patched paths back to placeholder, then apply current
+    sed -i 's|url("[^"]*gentoo-icon\.png")|url("__HYPR_DIR__/gentoo-icon.png")|g' "$STYLE_FILE"
+    sed -i "s|__HYPR_DIR__|$HYPR_DIR|g" "$STYLE_FILE"
+    echo "  waybar/style.css -> OK"
+fi
+
 # ── oh-my-zsh + plugins + powerlevel10k ──
 
 echo ""
