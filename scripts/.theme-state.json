@@ -1,7 +1,7 @@
 {
   "active": "i_am_purple",
   "kitty_bg_mode": "gradient",
-  "kitty_gradient_dir": "horizontal",
+  "kitty_gradient_dir": "vertical",
   "border_mode": "loop",
   "kitty_fg_color": ""
 }

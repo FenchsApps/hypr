@@ -3,17 +3,59 @@
     "position": "top",
     "height": 40,
     "margin-top": 8,
-    "margin-left": 14,
-    "margin-right": 14,
+    "margin-left": 12,
+    "margin-right": 12,
     "spacing": 0,
 
-    "modules-left": ["custom/gentoo", "hyprland/workspaces"],
-    "modules-center": ["clock"],
-    "modules-right": ["custom/cava", "bluetooth", "pulseaudio"],
+    "modules-left": [
+        "custom/gentoo",
+        "group/hardware",
+        "custom/terminal",
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "custom/player-prev",
+        "mpris",
+        "custom/player-next"
+    ],
+    "modules-right": [
+        "tray",
+        "group/status",
+        "clock"
+    ],
+
+    "group/hardware": {
+        "orientation": "inherit",
+        "modules": ["cpu", "battery"]
+    },
+
+    "group/status": {
+        "orientation": "inherit",
+        "modules": ["pulseaudio", "bluetooth"]
+    },
 
     "custom/gentoo": {
         "format": " ",
         "on-click": "kitty",
+        "tooltip": false
+    },
+
+    "custom/terminal": {
+        "exec": "~/.config/hypr/scripts/terminal-name.sh",
+        "return-type": "json",
+        "interval": 2,
+        "tooltip": false
+    },
+
+    "custom/player-prev": {
+        "format": "󰒮",
+        "on-click": "playerctl previous",
+        "tooltip": false
+    },
+
+    "custom/player-next": {
+        "format": "󰒭",
+        "on-click": "playerctl next",
         "tooltip": false
     },
 
@@ -25,31 +67,50 @@
         "active-only": false
     },
 
-    "clock": {
-        "format": "{:%H:%M}",
-        "format-alt": "{:%d.%m.%Y  %H:%M}",
-        "tooltip-format": "<tt>{calendar}</tt>",
-        "calendar": {
-            "mode": "month",
-            "format": {
-                "months": "<span color='#b388ff'><b>{}</b></span>",
-                "today": "<span color='#ea80fc'><b><u>{}</u></b></span>"
-            }
-        }
+    "cpu": {
+        "format": " {usage}%",
+        "interval": 3,
+        "tooltip": true
     },
 
-    "custom/cava": {
-        "exec": "~/.config/hypr/scripts/cava-waybar.sh",
-        "format": "{}",
-        "tooltip": false,
-        "restart-interval": 5
+    "battery": {
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-full": "󰁹 {capacity}%",
+        "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "interval": 30,
+        "tooltip-format": "{timeTo}\n{power:.1f}W"
+    },
+
+    "mpris": {
+        "format": "{player_icon}  {artist} — {title}",
+        "format-paused": "{player_icon}  {artist} — {title}  󰏤",
+        "format-stopped": "  Nothing playing",
+        "player-icons": {
+            "spotify": "",
+            "default": "󰎆",
+            "chromium": "",
+            "chrome": "",
+            "vlc": "󰕼",
+            "firefox": "󰈹"
+        },
+        "max-length": 50,
+        "on-click": "playerctl play-pause",
+        "on-scroll-up": "playerctl volume 0.02+",
+        "on-scroll-down": "playerctl volume 0.02-",
+        "tooltip-format": "{player}: {title}\n{artist} — {album}\n{position}/{length}"
+    },
+
+    "tray": {
+        "icon-size": 18,
+        "spacing": 8
     },
 
     "bluetooth": {
-        "format": " {status}",
-        "format-connected": " {num_connections}",
-        "format-disabled": "",
-        "tooltip-format": "{controller_alias}\n{num_connections} подключено",
+        "format": "󰂯",
+        "format-connected": "󰂱 {num_connections}",
+        "format-disabled": "󰂲",
+        "tooltip-format": "{controller_alias}\n{num_connections} connected",
         "tooltip-format-connected": "{controller_alias}\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}",
         "on-click": "blueman-manager",
@@ -58,13 +119,26 @@
 
     "pulseaudio": {
         "format": "{icon} {volume}%",
-        "format-muted": "MUTE",
+        "format-muted": "󰝟 mute",
         "format-icons": {
-            "default": ["LOW", "MID", "HIGH"]
+            "default": ["󰕿", "󰖀", "󰕾"]
         },
         "on-click": "pavucontrol",
         "on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
         "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+",
         "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
+    },
+
+    "clock": {
+        "format": "  {:%H:%M}",
+        "format-alt": "  {:%a %d %b  %H:%M}",
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "calendar": {
+            "mode": "month",
+            "format": {
+                "months": "<span color='#f5c2e7'><b>{}</b></span>",
+                "today": "<span color='#cba6f7'><b><u>{}</u></b></span>"
+            }
+        }
     }
 }

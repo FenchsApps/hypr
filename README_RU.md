@@ -1,6 +1,6 @@
 # Hyprland Rice
 
-Конфигурация Hyprland с тремя темами, кастомными скриптами и полной интеграцией всех компонентов.
+Конфигурация Hyprland с кастомными темами, медиаплеером в waybar, настройкой neovim и oh-my-zsh.
 
 **Автор:** FenchsApps
 
@@ -12,21 +12,31 @@ hypr/
 ├── hyprpaper.conf         # Обои
 ├── waybar/                # Панель (конфиг + стили)
 ├── wofi/                  # Лаунчер приложений
-├── kitty/                 # Терминал
+├── kitty/                 # Терминал (+ градиентный фон)
 ├── dunst/                 # Уведомления
 ├── swaylock/              # Экран блокировки
+├── nvim/                  # Конфиг Neovim (lazy.nvim + LSP)
 ├── fastfetch/             # Системная информация
 ├── neofetch/              # Системная информация (альт.)
 ├── hyfetch.json           # HyFetch (neofetch + флаги)
+├── zshrc                  # Конфиг Zsh (симлинк на ~/.zshrc)
+├── p10k.zsh               # Тема Powerlevel10k (симлинк на ~/.p10k.zsh)
+├── gentoo-white.svg       # Иконка Gentoo (белая, исходник)
+├── gentoo-icon.png        # Иконка Gentoo (генерируется при установке)
 ├── scripts/
 │   ├── theme-manager.py   # GTK4 менеджер тем (3 темы)
 │   ├── cheatsheet.py      # GTK4 шпаргалка по хоткеям
 │   ├── float-at-cursor.sh # Плавающее окно под курсором
 │   ├── cava-waybar.sh     # Визуализация звука в waybar
+│   ├── terminal-name.sh   # Определение текущего терминала для waybar
 │   ├── wallpaper.sh       # Выбор обоев через wofi
 │   └── themes.json        # Определения тем
-└── install.sh             # Установка симлинков
+└── install.sh             # Полный установщик (симлинки + зависимости)
 ```
+
+## Waybar
+
+Округлённые pill-секции с прозрачным чёрным фоном. Иконка Gentoo слева, медиаплеер с кнопками управления по центру, системный трей с иконками приложений справа.
 
 ## Темы
 
@@ -47,45 +57,88 @@ chmod +x install.sh
 ./install.sh
 ```
 
-Скрипт создаст симлинки в `~/.config/` для waybar, wofi, kitty, dunst, swaylock, neofetch, fastfetch и hyfetch.
+Скрипт выполнит:
+- Создание симлинков в `~/.config/` для waybar, wofi, kitty, dunst, swaylock, neofetch, fastfetch, nvim
+- Симлинк `zshrc` → `~/.zshrc` и `p10k.zsh` → `~/.p10k.zsh`
+- Генерацию `gentoo-icon.png` из SVG
+- Установку oh-my-zsh, powerlevel10k, zsh-autosuggestions, zsh-syntax-highlighting
+- Установку плагинов neovim через lazy.nvim
+- Проверку всех зависимостей
 
-## Обязательные программы
+## Необходимые пакеты
 
 ### Основное
-- [Hyprland](https://hyprland.org) — Wayland-композитор
-- [Waybar](https://github.com/Alexays/Waybar) — панель
-- [Wofi](https://hg.sr.ht/~scoopta/wofi) — лаунчер
-- [Kitty](https://sw.kovidgoyal.net/kitty/) — терминал
-- [Dunst](https://dunst-project.org) — уведомления
-- [Swaylock](https://github.com/swaywm/swaylock) — блокировка экрана
-- [Hyprpaper](https://github.com/hyprwm/hyprpaper) — обои
+
+| Пакет | Описание |
+|-------|----------|
+| [hyprland](https://hyprland.org) | Wayland-композитор |
+| [waybar](https://github.com/Alexays/Waybar) | Панель задач |
+| [wofi](https://hg.sr.ht/~scoopta/wofi) | Лаунчер приложений |
+| [kitty](https://sw.kovidgoyal.net/kitty/) | Эмулятор терминала |
+| [dunst](https://dunst-project.org) | Демон уведомлений |
+| [swaylock](https://github.com/swaywm/swaylock) | Экран блокировки |
+| [hyprpaper](https://github.com/hyprwm/hyprpaper) | Менеджер обоев |
 
 ### Аудио
-- [PipeWire](https://pipewire.org) + WirePlumber + pipewire-pulse
-- [PavuControl](https://freedesktop.org/software/pulseaudio/pavucontrol/) — управление звуком
-- [Cava](https://github.com/karlstav/cava) — визуализация аудио
 
-### Bluetooth и сеть
-- [Blueman](https://github.com/blueman-project/blueman) — Bluetooth-менеджер
-- [NetworkManager](https://networkmanager.dev) + nm-applet
+| Пакет | Описание |
+|-------|----------|
+| [pipewire](https://pipewire.org) | Аудио-сервер |
+| wireplumber | Менеджер сессий PipeWire |
+| pipewire-pulse | Совместимость с PulseAudio |
+| [pavucontrol](https://freedesktop.org/software/pulseaudio/pavucontrol/) | GUI управления звуком |
+| [playerctl](https://github.com/altdesktop/playerctl) | Управление медиаплеером (плеер в waybar) |
+| [cava](https://github.com/karlstav/cava) | Визуализатор аудио |
+
+### Сеть и Bluetooth
+
+| Пакет | Описание |
+|-------|----------|
+| [networkmanager](https://networkmanager.dev) | Управление сетью |
+| nm-applet | Трей-апплет NetworkManager |
+| [blueman](https://github.com/blueman-project/blueman) | Bluetooth-менеджер |
+
+### Шелл и редактор
+
+| Пакет | Описание |
+|-------|----------|
+| [zsh](https://www.zsh.org) | Шелл |
+| [oh-my-zsh](https://ohmyz.sh) | Фреймворк Zsh (ставится через install.sh) |
+| [powerlevel10k](https://github.com/romkatv/powerlevel10k) | Тема Zsh (ставится через install.sh) |
+| [neovim](https://neovim.io) | Текстовый редактор |
 
 ### Утилиты
-- [grim](https://sr.ht/~emersion/grim/) + [slurp](https://github.com/emersion/slurp) — скриншоты
-- [wl-clipboard](https://github.com/bugaevc/wl-clipboard) — буфер обмена
-- [jq](https://jqlang.github.io/jq/) — парсинг JSON (скрипты)
-- [brightnessctl](https://github.com/Haikarainen/light) — яркость
+
+| Пакет | Описание |
+|-------|----------|
+| [grim](https://sr.ht/~emersion/grim/) | Скриншоты |
+| [slurp](https://github.com/emersion/slurp) | Выбор области экрана |
+| [wl-clipboard](https://github.com/bugaevc/wl-clipboard) | Буфер обмена (wl-copy) |
+| [brightnessctl](https://github.com/Haikarainen/light) | Управление яркостью |
+| [jq](https://jqlang.github.io/jq/) | Обработка JSON (для скриптов) |
+| [librsvg](https://wiki.gnome.org/Projects/LibRsvg) | Конвертер SVG (rsvg-convert, для генерации иконки) |
 
 ### Системная информация
-- [Fastfetch](https://github.com/fastfetch-cli/fastfetch)
-- [Neofetch](https://github.com/dylanaraps/neofetch)
-- [HyFetch](https://github.com/hykilpikonna/hyfetch)
 
-### Python (для скриптов)
-- Python 3 + GTK4 (`gi.repository`)
-- [Pillow](https://python-pillow.org) — градиенты для Kitty
+| Пакет | Описание |
+|-------|----------|
+| [fastfetch](https://github.com/fastfetch-cli/fastfetch) | Информация о системе |
+| [neofetch](https://github.com/dylanaraps/neofetch) | Информация о системе (альт.) |
+| [hyfetch](https://github.com/hykilpikonna/hyfetch) | Neofetch + прайд-флаги |
+
+### Python
+
+| Пакет | Описание |
+|-------|----------|
+| python3 | Среда выполнения (для GTK-скриптов) |
+| python3-gtk4 | GTK4 bindings (`gi.repository`) |
+| [pillow](https://python-pillow.org) | Обработка изображений (градиенты kitty) |
 
 ### Шрифты
-- [FiraCode Nerd Font](https://www.nerdfonts.com)
+
+| Пакет | Описание |
+|-------|----------|
+| [FiraCode Nerd Font](https://www.nerdfonts.com) | Основной шрифт UI и терминала |
 
 ## Горячие клавиши
 
