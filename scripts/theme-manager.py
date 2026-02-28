@@ -55,126 +55,259 @@ def generate_hyprland_colors(t, border_mode):
 
 def generate_waybar_style(t):
     css = f'''* {{
-    font-family: "Comic Sans MS", "Comic Neue", sans-serif;
-    font-size: 14px;
-    color: #ffffff;
+    font-family: "FiraCode Nerd Font", "JetBrains Mono", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #e1dee9;
     border: none;
     border-radius: 0;
     min-height: 0;
 }}
 
 window#waybar {{
-    background: {css_rgba(t["bg"],"e0")};
-    border-radius: 16px;
-    border: 1px solid {css_rgba(t["accent"],"26")};
+    background: transparent;
 }}
 
 tooltip {{
-    background: {css_rgba(t["bg"],"eb")};
-    border: 1px solid {css_rgba(t["accent"],"4d")};
-    border-radius: 12px;
-    color: #ffffff;
+    background: rgba(10, 10, 10, 0.92);
+    border: 1px solid rgba(200, 160, 255, 0.2);
+    border-radius: 14px;
+    color: #e1dee9;
+    padding: 6px 10px;
 }}
 
 tooltip label {{
-    color: #ffffff;
+    color: #e1dee9;
 }}
 
+/* ── Gentoo button ── */
+
 #custom-gentoo {{
-    font-family: "FiraCode Nerd Font", sans-serif;
-    font-size: 20px;
-    color: {t["muted"]};
-    padding: 0 6px 0 14px;
-    margin: 4px 0;
+    background-color: rgba(0, 0, 0, 0.72);
+    background-image: url("/home/thug/.config/hypr/gentoo-icon.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 18px 18px;
+    border-radius: 16px;
+    padding: 0 18px;
+    margin: 4px 4px 4px 0;
+    min-width: 36px;
+    font-size: 1px;
+    color: transparent;
 }}
 
 #custom-gentoo:hover {{
-    color: {t["accent"]};
+    background-color: rgba(30, 30, 30, 0.85);
 }}
 
-#workspaces {{
-    padding: 0 6px;
+/* ── Hardware pill (CPU + Battery) ── */
+
+#cpu,
+#battery {{
+    background: rgba(0, 0, 0, 0.72);
+    padding: 0 12px;
     margin: 4px 0;
+}}
+
+#cpu {{
+    border-radius: 16px 0 0 16px;
+    padding-left: 14px;
+    color: #b9f6ca;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+}}
+
+#battery {{
+    border-radius: 0 16px 16px 0;
+    padding-right: 14px;
+    color: #ffe082;
+}}
+
+#battery.warning {{
+    color: #ffab91;
+}}
+
+#battery.critical {{
+    color: #ef9a9a;
+    animation: blink 1s steps(2) infinite;
+}}
+
+#battery.charging {{
+    color: #b9f6ca;
+}}
+
+/* ── Terminal indicator ── */
+
+#custom-terminal {{
+    background: rgba(0, 0, 0, 0.72);
+    border-radius: 16px;
+    padding: 0 14px;
+    margin: 4px 4px;
+    color: #ce93d8;
+    font-size: 12px;
+}}
+
+#custom-terminal.empty {{
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+    background: transparent;
+}}
+
+/* ── Workspaces pill ── */
+
+#workspaces {{
+    background: rgba(0, 0, 0, 0.72);
+    border-radius: 16px;
+    padding: 0 4px;
+    margin: 4px 4px;
 }}
 
 #workspaces button {{
-    font-family: "Comic Sans MS", "Comic Neue", sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: bold;
-    color: #ffffff;
+    color: #9e9e9e;
     background: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.7);
-    border-radius: 10px;
+    border: none;
+    border-radius: 12px;
     padding: 2px 10px;
-    margin: 2px 3px;
-    min-width: 28px;
+    margin: 3px 2px;
+    min-width: 24px;
+    transition: all 0.2s ease;
 }}
 
 #workspaces button:hover {{
-    background: rgba(255, 255, 255, 0.08);
-    border-color: {t["accent"]};
-    color: {t["accent"]};
+    background: rgba(200, 160, 255, 0.12);
+    color: #ce93d8;
 }}
 
 #workspaces button.active {{
-    color: {t["active"]};
-    background: {css_rgba(t["accent"],"40")};
-    border: 2px solid transparent;
+    color: #1a0d2b;
+    background: linear-gradient(135deg, #ce93d8, #b388ff);
+    font-weight: bold;
 }}
 
 #workspaces button.urgent {{
-    color: #ff0000;
-    background: rgba(255, 0, 0, 0.2);
-    border-color: #ff0000;
+    color: #1a0d2b;
+    background: #ef9a9a;
 }}
 
-#clock {{
-    font-family: "Comic Sans MS", "Comic Neue", sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    color: {t["fg"]};
-    padding: 0 14px;
-    margin: 4px 0;
-}}
+/* ── Player controls (center) ── */
 
-#custom-cava {{
-    font-size: 12px;
-    color: {t["accent"]};
-    padding: 0 12px;
-    margin: 4px 0;
-    letter-spacing: -1px;
-}}
-
-#bluetooth {{
+#custom-player-prev,
+#custom-player-next {{
+    background: rgba(0, 0, 0, 0.72);
     padding: 0 10px;
     margin: 4px 0;
-    color: {t["fg"]};
+    color: #ce93d8;
+    font-size: 16px;
+    transition: color 0.2s ease;
 }}
 
-#bluetooth:hover {{
-    color: {t["accent"]};
+#custom-player-prev:hover,
+#custom-player-next:hover {{
+    color: #f0a0d0;
 }}
 
-#bluetooth.connected {{
-    color: {t["accent"]};
+#custom-player-prev {{
+    border-radius: 16px 0 0 16px;
+    padding-left: 14px;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
 }}
 
-#bluetooth.disabled {{
-    color: {t["muted2"]};
+#custom-player-next {{
+    border-radius: 0 16px 16px 0;
+    padding-right: 14px;
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+}}
+
+/* ── MPRIS player pill (center) ── */
+
+#mpris {{
+    background: rgba(0, 0, 0, 0.72);
+    padding: 0 16px;
+    margin: 4px 0;
+    color: #f0a0d0;
+    font-size: 12px;
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+}}
+
+#mpris.paused {{
+    color: #9e9e9e;
+}}
+
+#mpris.stopped {{
+    color: #6a6a6a;
+}}
+
+/* ── Tray pill (app icons) ── */
+
+#tray {{
+    background: rgba(0, 0, 0, 0.72);
+    border-radius: 16px;
+    padding: 0 12px;
+    margin: 4px 4px;
+}}
+
+#tray > .passive {{
+    -gtk-icon-effect: dim;
+}}
+
+#tray > .needs-attention {{
+    -gtk-icon-effect: highlight;
+}}
+
+/* ── Status pill (pulseaudio + bluetooth) ── */
+
+#pulseaudio,
+#bluetooth {{
+    background: rgba(0, 0, 0, 0.72);
+    padding: 0 12px;
+    margin: 4px 0;
 }}
 
 #pulseaudio {{
-    padding: 0 14px 0 10px;
-    margin: 4px 8px 4px 4px;
-    color: {t["fg"]};
+    border-radius: 16px 0 0 16px;
+    padding-left: 14px;
+    color: #b388ff;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
 }}
 
 #pulseaudio:hover {{
-    color: {t["accent"]};
+    color: #ce93d8;
 }}
 
 #pulseaudio.muted {{
-    color: {t["muted2"]};
+    color: #6a6a6a;
+}}
+
+#bluetooth {{
+    border-radius: 0 16px 16px 0;
+    padding-right: 14px;
+    color: #90caf9;
+}}
+
+#bluetooth:hover {{
+    color: #b388ff;
+}}
+
+#bluetooth.connected {{
+    color: #90caf9;
+}}
+
+#bluetooth.disabled {{
+    color: #6a6a6a;
+}}
+
+/* ── Clock pill ── */
+
+#clock {{
+    background: rgba(0, 0, 0, 0.72);
+    border-radius: 16px;
+    padding: 0 16px;
+    margin: 4px 0 4px 4px;
+    color: #f0a0d0;
+    font-weight: bold;
 }}
 '''
     with open(os.path.join(HYPR_DIR, "waybar/style.css"), "w") as f:

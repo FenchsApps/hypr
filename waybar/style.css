@@ -79,10 +79,6 @@ tooltip label {
     color: #b9f6ca;
 }
 
-@keyframes blink {
-    to { color: transparent; }
-}
-
 /* ── Terminal indicator ── */
 
 #custom-terminal {
